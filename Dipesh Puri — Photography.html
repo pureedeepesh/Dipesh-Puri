@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dipesh Puri — Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --text: #e8e4dc;
+    --muted: #6b6860;
+    --accent: #c8a96e;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.12s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 3.5rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-decoration: none;
+    cursor: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: none;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* PAGES */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* HERO */
+  #page-home {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-bg img {
+    display: block;
+    max-height: 92vh;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    opacity: 0;
+    animation: fadeIn 1.4s ease 0.2s forwards;
+    -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
+    margin: 0 auto;
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,10,10,0.88) 0%,
+      rgba(10,10,10,0.15) 35%,
+      rgba(10,10,10,0.08) 65%,
+      rgba(10,10,10,0.4) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-card {
+    position: relative;
+    height: 88vh;
+    width: auto;
+    cursor: pointer;
+    overflow: hidden;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+
+  .hero-card img {
+    height: 100%;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    opacity: 0;
+    animation: fadeIn 1.4s ease 0.2s forwards;
+    -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
+    transition: filter 0.4s ease, transform 0.5s ease;
+    filter: brightness(0.75);
+  }
+
+  .hero-card:hover img {
+    filter: brightness(1.1);
+    transform: scale(1.03);
+  }
+
+  .hero-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 3rem;
+    pointer-events: none;
+  }
+
+  .hero-card-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.4s ease, letter-spacing 0.4s ease;
+  }
+
+  .hero-card:hover .hero-card-label {
+    color: var(--accent);
+    letter-spacing: 0.2em;
+  }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 5rem 3.5rem;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 6vw, 88px);
+    font-weight: 400;
+    line-height: 1.0;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 300px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    cursor: none;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-cta::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .hero-cta:hover::after { width: 70px; }
+
+  .hero-counter {
+    position: absolute;
+    bottom: 3rem;
+    right: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    z-index: 2;
+    writing-mode: vertical-rl;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  .scroll-text {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+  }
+
+  /* GALLERY PAGE */
+  .gallery-header {
+    padding: 8rem 3.5rem 3rem;
+  }
+
+  .gallery-header .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .gallery-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .gallery-header p {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .gallery-tabs {
+    display: flex;
+    gap: 0;
+    margin-top: 2rem;
+  }
+
+  .gallery-tab {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.75rem 2rem;
+    border-bottom: 1px solid var(--border);
+    cursor: none;
+    transition: all 0.3s;
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+  }
+
+  .gallery-tab:hover { color: var(--text); }
+
+  .gallery-tab.active {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+
+  .gallery-tab-spacer {
+    flex: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gallery-pane { display: none; }
+  .gallery-pane.active { display: block; }
+
+  .gallery-divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--border);
+    margin: 2rem 0 3rem;
+  }
+
+  .gallery-grid {
+    padding: 0 3.5rem 5rem;
+    columns: 3;
+    column-gap: 12px;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: brightness(0.92);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.2rem;
+  }
+
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+  .gallery-item-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .gallery-more {
+    margin: 0 3.5rem 4rem;
+    padding: 1.5rem 2rem;
+    border: 0.5px dashed rgba(200,169,110,0.2);
+    text-align: center;
+  }
+
+  .gallery-more p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .gallery-more span { color: var(--accent); }
+
+  /* ABOUT PAGE */
+  .about-wrap {
+    padding: 8rem 3.5rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    min-height: 100vh;
+  }
+
+  .about-img-side {
+    position: relative;
+  }
+
+  .about-img-frame {
+    position: relative;
+  }
+
+  .about-img-frame::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: 12px;
+    bottom: 12px;
+    border: 0.5px solid rgba(200,169,110,0.2);
+    z-index: 0;
+  }
+
+  .about-img-frame img {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: grayscale(20%);
+  }
+
+  .about-img-placeholder {
+    width: 100%;
+    height: 580px;
+    background: var(--bg3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-text-side {}
+
+  .about-text-side .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text-side h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .about-text-side h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .about-text-side p {
+    font-size: 14px;
+    line-height: 1.95;
+    color: #9a9690;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-line {
+    width: 50px;
+    height: 0.5px;
+    background: var(--accent);
+    margin: 2.5rem 0;
+    opacity: 0.5;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* CONTACT PAGE */
+  .contact-wrap {
+    padding: 8rem 3.5rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    min-height: 100vh;
+    align-items: start;
+  }
+
+  .contact-left .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .contact-left h2 em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .contact-left p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 340px;
+    margin-bottom: 3rem;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-detail-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .contact-detail-value {
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .contact-detail-value a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: none;
+  }
+
+  .contact-detail-value a:hover { color: var(--accent); }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .social-link {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .social-link::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 0.5px;
+    background: var(--muted);
+    transition: all 0.3s;
+  }
+
+  .social-link:hover { color: var(--accent); }
+  .social-link:hover::before { background: var(--accent); width: 30px; }
+
+  /* FORM */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-field label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 0;
+    padding: 13px 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus {
+    border-color: rgba(200,169,110,0.4);
+  }
+
+  .form-field select option { background: var(--bg2); }
+
+  .form-field textarea {
+    resize: none;
+    height: 130px;
+    line-height: 1.7;
+  }
+
+  .submit-btn {
+    margin-top: 0.5rem;
+    padding: 14px 36px;
+    background: transparent;
+    border: 0.5px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .submit-btn:hover {
+    color: var(--bg);
+  }
+
+  .submit-btn:hover::before {
+    transform: translateX(0);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3.5rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+  }
+
+  footer p {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  footer p span { color: var(--accent); }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: none;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.96);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-height: 88vh;
+    max-width: 80vw;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: none;
+    transition: color 0.3s;
+  }
+
+  .lightbox-close:hover { color: var(--text); }
+
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0.5px solid rgba(255,255,255,0.15);
+    color: var(--text);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: none;
+    transition: all 0.3s;
+    z-index: 210;
+  }
+
+  .lightbox-arrow:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .lightbox-prev { left: 2rem; }
+  .lightbox-next { right: 2rem; }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">Dipesh <span>Puri</span></a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('about')">About</a></li>
+    <li><a onclick="showPage('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg">
+      <div style="display:flex; height:100%; width:100%; align-items:center; justify-content:center; gap: 24px; padding: 0 2rem;">
+
+        <!-- STREET -->
+        <div class="hero-card" onclick="goToTab('street')">
+          <img src="https://i.ibb.co/Df7cVbDt/DSCF1289.jpg" alt="Street photography">
+          <div class="hero-card-overlay">
+            <span class="hero-card-label">Street</span>
+          </div>
+        </div>
+
+        <!-- EVENTS -->
+        <div class="hero-card" onclick="goToTab('events')">
+          <img src="https://i.ibb.co/vCWGYyQ6/DSCF3093.jpg" alt="Events photography">
+          <div class="hero-card-overlay">
+            <span class="hero-card-label">Events</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="hero-bg-overlay"></div>
+    </div>
+    <div class="hero-left">
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="page" id="page-gallery">
+  <div class="gallery-header">
+    <span class="eyebrow">Selected work</span>
+    <h2>Portfolio</h2>
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="switchTab('street', this)">Street</button>
+      <button class="gallery-tab" onclick="switchTab('events', this)">Events</button>
+      <div class="gallery-tab-spacer"></div>
+    </div>
+  </div>
+
+  <!-- STREET TAB -->
+  <div class="gallery-pane active" id="tab-street">
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/Xrr3mLMB/DSCF4859.jpg" alt="Street photo 1">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/zVvxQYJ4/DSCF6224.jpg" alt="Street photo 3">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/4R4nyXJC/DSCF4668-Edit.jpg" alt="Street photo 4">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/MxNPr7Sm/DSCF2912.jpg" alt="Street photo 5">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/9jjGVDv/DSCF2182-2.jpg" alt="Street photo 6">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/PZmGQZd7/DSCF1846.jpg" alt="Street photo 7">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/s9LxtQ4y/DSCF1272.jpg" alt="Street photo 8">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/MqvLPb3/DSCF1133.jpg" alt="Street photo 9">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/k2bcdM37/DSCF0782.jpg" alt="Street photo 10">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'street')">
+        <img src="https://i.ibb.co/SXLgKDP1/DSCF0743.jpg" alt="Street photo 11">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
+      </div>
+    </div>
+    <div class="gallery-more">
+      <p>More street photos coming soon — <span>30–40 images in progress</span></p>
+    </div>
+  </div>
+
+  <!-- EVENTS TAB -->
+  <div class="gallery-pane" id="tab-events">
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/vCWGYyQ6/DSCF3093.jpg" alt="Event photo">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/zWJqQXWb/DSCF2023.jpg" alt="Event photo 1">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/LhbXfHBq/DSCF3442.jpg" alt="Event photo 2">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/rfN31chy/DSCF2865.jpg" alt="Event photo 3">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/3yjpq4VT/DSCF2229.jpg" alt="Event photo 4">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this, 'events')">
+        <img src="https://i.ibb.co/b5kfc3gJ/DSCF2202.jpg" alt="Event photo 5">
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="about-wrap">
+    <div class="about-img-side">
+      <div class="about-img-frame">
+        <div class="about-img-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Your portrait here</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-text-side">
+      <span class="eyebrow">About the photographer</span>
+      <h2>Dipesh<br><em>Puri</em></h2>
+      <p>Dipesh Puri is a Toronto-based photographer whose love for the craft grew organically as he strolled through the city, drawn to everything interesting he found along the way — the people, the streets, the buildings, the alleyways, the parks.</p>
+      <p>What began as quiet curiosity quickly became a calling. Over three years, that curiosity expanded into shooting events, portraits, and light video work. Every frame is an invitation to look closer at the world we often rush past.</p>
+      <p>His work is rooted in the belief that every street has a story, and every city has a soul worth documenting.</p>
+      <div class="about-line"></div>
+      <p style="font-size:12px; letter-spacing:0.08em; color: var(--muted);">Based in Toronto &nbsp;·&nbsp; Available worldwide</p>
+      <div class="about-stats">
+        <div>
+          <span class="stat-num">3+</span>
+          <span class="stat-label">Years shooting</span>
+        </div>
+        <div>
+          <span class="stat-num">500+</span>
+          <span class="stat-label">Frames captured</span>
+        </div>
+        <div>
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Stories told</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Let's work<br><em>together</em></h2>
+      <p>Whether you're looking to commission a project, license an image, book an event, or simply say hello — I'd love to hear from you.</p>
+      <div class="contact-details">
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value"><a href="mailto:dipeshpury3@gmail.com">dipeshpury3@gmail.com</a></span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Based in</span>
+          <span class="contact-detail-value">Toronto, Canada</span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Available for</span>
+          <span class="contact-detail-value">Street, Events, Portraits, Video</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a class="social-link" href="https://www.instagram.com/deepesh_puree?igsh=MXJrMnZnb3hjYXNtcw%3D%3D&utm_source=qr" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-field"><label>Name</label><input type="text" placeholder="Your name"></div>
+        <div class="form-field"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      </div>
+      <div class="form-field">
+        <label>Subject</label>
+        <select>
+          <option>Commission a project</option>
+          <option>Book an event</option>
+          <option>License an image</option>
+          <option>Print inquiry</option>
+          <option>Just saying hello</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
+      <button class="submit-btn">Send message</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Dipesh Puri</span> — All rights reserved</p>
+  <ul class="footer-links">
+    <li><a onclick="showPage('about')">About</a></li>
+    <li><a onclick="showPage('contact')">Contact</a></li>
+  </ul>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">Close ✕</span>
+  <button class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8592;</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8594;</button>
+  <span class="lightbox-counter" id="lightbox-counter"></span>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  // Page navigation
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // Tab switching
+  function switchTab(tab) {
+    document.querySelectorAll('.gallery-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    const btns = document.querySelectorAll('.gallery-tab');
+    if (tab === 'street') btns[0].classList.add('active');
+    if (tab === 'events') btns[1].classList.add('active');
+  }
+
+  function goToTab(tab) {
+    showPage('gallery');
+    switchTab(tab);
+  }
+
+  // Lightbox with arrow navigation
+  let galleryImages = [];
+  let currentIndex = 0;
+
+  function buildGalleryList(tab) {
+    const pane = document.getElementById('tab-' + tab);
+    galleryImages = Array.from(pane.querySelectorAll('.gallery-item img')).map(img => img.src);
+  }
+
+  function openLightbox(el, tab) {
+    buildGalleryList(tab);
+    const img = el.querySelector('img');
+    currentIndex = galleryImages.indexOf(img.src);
+    showLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function showLightboxImage() {
+    const lbImg = document.getElementById('lightbox-img');
+    lbImg.style.opacity = 0;
+    setTimeout(() => {
+      lbImg.src = galleryImages[currentIndex];
+      lbImg.style.opacity = 1;
+    }, 150);
+    document.getElementById('lightbox-counter').textContent =
+      (currentIndex + 1) + ' / ' + galleryImages.length;
+  }
+
+  function navigateLightbox(dir) {
+    currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+    showLightboxImage();
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  });
+</script>
+</body>
+</html>
