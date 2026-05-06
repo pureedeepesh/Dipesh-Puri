@@ -169,11 +169,11 @@
     -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
     mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
     transition: filter 0.4s ease, transform 0.5s ease;
-    filter: brightness(0.75);
+    filter: brightness(0.92);
   }
 
   .hero-card:hover img {
-    filter: brightness(1.1);
+    filter: brightness(1.15);
     transform: scale(1.03);
   }
 
@@ -848,6 +848,8 @@
     max-width: 80vw;
     object-fit: contain;
     transition: opacity 0.2s ease;
+    background: var(--bg);
+    display: block;
   }
 
   .lightbox-close {
