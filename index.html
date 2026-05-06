@@ -1331,19 +1331,28 @@
   // Swipe support for mobile
   let touchStartX = 0;
   let touchEndX = 0;
+  let isSwiping = false;
 
-  const lightbox = document.getElementById('lightbox');
-  lightbox.addEventListener('touchstart', e => {
+  document.addEventListener('touchstart', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
     touchStartX = e.changedTouches[0].screenX;
+    isSwiping = true;
   }, { passive: true });
 
-  lightbox.addEventListener('touchend', e => {
+  document.addEventListener('touchmove', e => {
+    if (!isSwiping) return;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (!isSwiping) return;
     touchEndX = e.changedTouches[0].screenX;
     const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 40) {
       if (diff > 0) navigateLightbox(1);
       else navigateLightbox(-1);
     }
+    isSwiping = false;
   }, { passive: true });
 </script>
 </body>
