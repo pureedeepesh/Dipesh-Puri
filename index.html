@@ -996,11 +996,7 @@
       max-height: 80vh !important;
     }
 
-    .lightbox-arrow {
-      width: 36px;
-      height: 36px;
-      font-size: 14px;
-    }
+    .lightbox-arrow { display: none !important; }
 
     .lightbox-prev { left: 0.5rem; }
     .lightbox-next { right: 0.5rem; }
@@ -1307,6 +1303,7 @@
   function showLightboxImage() {
     const lbImg = document.getElementById('lightbox-img');
     lbImg.style.opacity = 0;
+    lbImg.src = '';
     setTimeout(() => {
       lbImg.src = galleryImages[currentIndex];
       lbImg.style.opacity = 1;
@@ -1322,6 +1319,7 @@
 
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
   }
 
   document.addEventListener('keydown', e => {
@@ -1329,6 +1327,24 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
     if (e.key === 'ArrowLeft') navigateLightbox(-1);
   });
+
+  // Swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) navigateLightbox(1);
+      else navigateLightbox(-1);
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>
