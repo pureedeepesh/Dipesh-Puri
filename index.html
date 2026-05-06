@@ -839,17 +839,28 @@
     z-index: 200;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .lightbox.open { display: flex; }
+
+  .lightbox-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
   .lightbox img {
     max-height: 88vh;
     max-width: 80vw;
     object-fit: contain;
     transition: opacity 0.2s ease;
-    background: var(--bg);
     display: block;
+    position: relative;
+    z-index: 201;
   }
 
   .lightbox-close {
@@ -927,7 +938,7 @@
     }
 
     .hero-card {
-      height: 42vh !important;
+      height: 36vh !important;
       width: 100% !important;
     }
 
@@ -935,6 +946,8 @@
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
     }
 
     .hero-card-label { font-size: 22px; }
@@ -1232,7 +1245,9 @@
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">Close ✕</span>
   <button class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8592;</button>
-  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-img-wrap">
+    <img id="lightbox-img" src="" alt="">
+  </div>
   <button class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8594;</button>
   <span class="lightbox-counter" id="lightbox-counter"></span>
 </div>
