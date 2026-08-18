@@ -11,13 +11,13 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #1a1a1a;
-    --text: #e8e4dc;
-    --muted: #6b6860;
+    --bg: #f2f0ed;
+    --bg2: #eae8e4;
+    --bg3: #e0deda;
+    --text: #111111;
+    --muted: #888888;
     --accent: #c8a96e;
-    --border: rgba(255,255,255,0.07);
+    --border: rgba(0,0,0,0.08);
   }
 
   html { scroll-behavior: smooth; }
@@ -63,8 +63,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.8rem 3.5rem;
-    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    padding: 1.8rem 3.5rem 1.8rem;
+    background: linear-gradient(to bottom, rgba(242,240,237,0.97) 0%, transparent 100%);
   }
 
   .nav-logo {
@@ -74,7 +74,7 @@
     letter-spacing: 0.04em;
     color: var(--text);
     text-decoration: none;
-    cursor: none;
+    cursor: pointer;
   }
 
   .nav-logo span { color: var(--accent); }
@@ -92,10 +92,10 @@
     color: var(--text);
     text-decoration: none;
     transition: color 0.3s;
-    cursor: none;
+    cursor: pointer;
   }
 
-  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover { color: var(--accent); }
 
   /* PAGES */
   .page { display: none; min-height: 100vh; }
@@ -167,8 +167,6 @@
     object-fit: contain;
     opacity: 0;
     animation: fadeIn 1.4s ease 0.2s forwards;
-    -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
-    mask-image: radial-gradient(ellipse 60% 72% at 50% 50%, black 20%, transparent 100%);
     transition: filter 0.4s ease, transform 0.5s ease;
     filter: brightness(0.92);
   }
@@ -317,7 +315,7 @@
 
   /* GALLERY PAGE */
   .gallery-header {
-    padding: 8rem 3.5rem 3rem;
+    padding: 4rem 3.5rem 2rem;
   }
 
   .gallery-header .eyebrow {
@@ -389,28 +387,34 @@
   }
 
   .gallery-grid {
-    padding: 0 3.5rem 5rem;
-    columns: 3;
-    column-gap: 12px;
+    padding: 0 3rem 5rem;
+    columns: 4;
+    column-gap: 16px;
   }
 
   .gallery-item {
     break-inside: avoid;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     overflow: hidden;
     position: relative;
-    cursor: none;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   }
 
   .gallery-item img {
     width: 100%;
     display: block;
     transition: transform 0.6s ease;
-    filter: brightness(0.92);
+    filter: brightness(0.97);
   }
 
   .gallery-item:hover img {
-    transform: scale(1.03);
+    transform: scale(1.02);
     filter: brightness(1);
   }
 
@@ -836,7 +840,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.96);
+    background: #f2f0ed;
     z-index: 200;
     align-items: center;
     justify-content: center;
@@ -871,27 +875,27 @@
     font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--muted);
-    cursor: none;
+    color: #888;
+    cursor: pointer;
     transition: color 0.3s;
   }
 
-  .lightbox-close:hover { color: var(--text); }
+  .lightbox-close:hover { color: #111; }
 
   .lightbox-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
-    border: 0.5px solid rgba(255,255,255,0.15);
-    color: var(--text);
+    border: 0.5px solid rgba(0,0,0,0.15);
+    color: #111;
     width: 48px;
     height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
-    cursor: none;
+    cursor: pointer;
     transition: all 0.3s;
     z-index: 210;
   }
@@ -911,7 +915,7 @@
     transform: translateX(-50%);
     font-size: 11px;
     letter-spacing: 0.18em;
-    color: var(--muted);
+    color: #888;
   }
 
   /* MOBILE */
@@ -959,13 +963,13 @@
 
     .gallery-grid {
       columns: 2 !important;
-      padding: 0 1.5rem 3rem !important;
-      column-gap: 8px;
+      padding: 5rem 1rem 3rem !important;
+      column-gap: 12px;
     }
 
-    .gallery-item:nth-child(3n+1),
-    .gallery-item:nth-child(3n+2),
-    .gallery-item:nth-child(3n+3) { height: auto; }
+    .gallery-item {
+      margin-bottom: 12px !important;
+    }
 
     .gallery-more { margin: 0 1.5rem 3rem; }
 
@@ -1018,192 +1022,43 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a class="nav-logo" onclick="showPage('home')">Dipesh <span>Puri</span></a>
+  <a class="nav-logo" onclick="showPage('gallery')">Dipesh <span>Puri</span></a>
   <ul class="nav-links">
     <li><a onclick="showPage('about')">About</a></li>
     <li><a onclick="showPage('contact')">Contact</a></li>
   </ul>
 </nav>
 
-<!-- HOME -->
-<div class="page active" id="page-home">
-  <div class="hero">
-    <div class="hero-bg">
-      <div style="display:flex; height:100%; width:100%; align-items:center; justify-content:center; gap: 24px; padding: 0 2rem;">
-
-        <!-- STREET -->
-        <div class="hero-card" onclick="goToTab('street')">
-          <img src="https://i.ibb.co/Df7cVbDt/DSCF1289.jpg" alt="Street photography">
-          <div class="hero-card-overlay">
-            <span class="hero-card-label">Street</span>
-          </div>
-        </div>
-
-        <!-- EVENTS -->
-        <div class="hero-card" onclick="goToTab('events')">
-          <img src="https://i.ibb.co/vCWGYyQ6/DSCF3093.jpg" alt="Events photography">
-          <div class="hero-card-overlay">
-            <span class="hero-card-label">Events</span>
-          </div>
-        </div>
-
-      </div>
-      <div class="hero-bg-overlay"></div>
-    </div>
-    <div class="hero-left">
-    </div>
-  </div>
-</div>
-
 <!-- GALLERY -->
-<div class="page" id="page-gallery">
-  <div class="gallery-header">
-    <span class="eyebrow">Selected work</span>
-    <h2>Portfolio</h2>
-    <div class="gallery-tabs">
-      <button class="gallery-tab active" onclick="switchTab('street', this)">Street</button>
-      <button class="gallery-tab" onclick="switchTab('events', this)">Events</button>
-      <div class="gallery-tab-spacer"></div>
-    </div>
+<div class="page active" id="page-gallery">
+  <div class="gallery-grid" style="padding-top: 6.5rem;">
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/rfN31chy/DSCF2865.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/JRfbwCVc/DSCF1272.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/YFtvyMzR/DSCF3486.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/vvZkZWph/DSCF6171.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/gCrLG1C/DSCF2229.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/RTNrq5sX/DSCF3093.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/Zn82q6J/DSCF2202.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/CXxkTNh/DSCF2023.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/67dTqkx4/sza-album.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/pvB00jKs/DSCF8171.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/Vcw55Ry9/DSCF6379.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/pryGvf5Z/DSCF6369.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/4wN58X03/DSCF6797.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/9HdGQGyh/DSCF6224.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/jPmHjnBs/DSCF4859.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/pB7tRgBV/DSCF4609.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/ccFP8tB3/DSCF4494.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/WNytFfGF/DSCF4477.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/Dgsw2WD2/DSCF4465.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/KjDHRK76/DSCF3150.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/xqdnBMDK/DSCF3048.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/TqgnFXm9/DSCF2182-2.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/B265TJQR/DSCF1846.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/TqNm54RW/DSCF1237.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/rR5DyZxG/DSCF0782.jpg" alt="Photo"></div>
+    <div class="gallery-item" onclick="openLightbox(this)"><img loading="lazy" src="https://i.ibb.co/vxXk4ZQB/DSCF0743.jpg" alt="Photo"></div>
   </div>
-
-  <!-- STREET TAB -->
-  <div class="gallery-pane active" id="tab-street">
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/Xrr3mLMB/DSCF4859.jpg" alt="Street photo 1">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/zVvxQYJ4/DSCF6224.jpg" alt="Street photo 3">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/4R4nyXJC/DSCF4668-Edit.jpg" alt="Street photo 4">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/MxNPr7Sm/DSCF2912.jpg" alt="Street photo 5">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/9jjGVDv/DSCF2182-2.jpg" alt="Street photo 6">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/PZmGQZd7/DSCF1846.jpg" alt="Street photo 7">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/s9LxtQ4y/DSCF1272.jpg" alt="Street photo 8">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/MqvLPb3/DSCF1133.jpg" alt="Street photo 9">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/k2bcdM37/DSCF0782.jpg" alt="Street photo 10">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/SXLgKDP1/DSCF0743.jpg" alt="Street photo 11">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/Z3XQSM7/DSCF3150-2.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/k65zLtx6/DSCF1234.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/DHb2L5Qw/DSCF4494.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/VkTg0Q8/DSCF8171.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/TBBJkB6t/DSCF4609.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/RpsBFm4k/DSCF3048.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/nsNftynh/DSCF1237.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/9kCMVSL3/DSCF2350.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/fY0zwy5z/DSCF6336.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/kgB9NTzZ/DSCF5968.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'street')">
-        <img loading="lazy" src="https://i.ibb.co/ZRM2tcp4/sza-album.jpg" alt="Street photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Street</span></div>
-      </div>
-    </div>
-    <div class="gallery-more">
-      <p>More street photos coming soon — <span>30–40 images in progress</span></p>
-    </div>
-  </div>
-
-  <!-- EVENTS TAB -->
-  <div class="gallery-pane" id="tab-events">
-    <div class="gallery-grid">
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/vCWGYyQ6/DSCF3093.jpg" alt="Event photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/zWJqQXWb/DSCF2023.jpg" alt="Event photo 1">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/LhbXfHBq/DSCF3442.jpg" alt="Event photo 2">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/rfN31chy/DSCF2865.jpg" alt="Event photo 3">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/3yjpq4VT/DSCF2229.jpg" alt="Event photo 4">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/b5kfc3gJ/DSCF2202.jpg" alt="Event photo 5">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/tptRq4mK/DSCF6171.jpg" alt="Event photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/pvzFm1NQ/DSCF6534.jpg" alt="Event photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/DH5Y510h/DSCF9053.jpg" alt="Event photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-      <div class="gallery-item" onclick="openLightbox(this, 'events')">
-        <img loading="lazy" src="https://i.ibb.co/TBjynWpW/DSCF6347.jpg" alt="Event photo">
-        <div class="gallery-item-overlay"><span class="gallery-item-label">Event</span></div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1327,32 +1182,16 @@
     window.scrollTo(0, 0);
   }
 
-  // Tab switching
-  function switchTab(tab) {
-    document.querySelectorAll('.gallery-pane').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    const btns = document.querySelectorAll('.gallery-tab');
-    if (tab === 'street') btns[0].classList.add('active');
-    if (tab === 'events') btns[1].classList.add('active');
-  }
-
-  function goToTab(tab) {
-    showPage('gallery');
-    switchTab(tab);
-  }
-
-  // Lightbox with arrow navigation
+  // Lightbox
   let galleryImages = [];
   let currentIndex = 0;
 
-  function buildGalleryList(tab) {
-    const pane = document.getElementById('tab-' + tab);
-    galleryImages = Array.from(pane.querySelectorAll('.gallery-item img')).map(img => img.src);
+  function buildGalleryList() {
+    galleryImages = Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src);
   }
 
-  function openLightbox(el, tab) {
-    buildGalleryList(tab);
+  function openLightbox(el) {
+    buildGalleryList();
     const img = el.querySelector('img');
     currentIndex = galleryImages.indexOf(img.src);
     showLightboxImage();
